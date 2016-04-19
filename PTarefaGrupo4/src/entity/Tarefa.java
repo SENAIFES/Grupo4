@@ -5,9 +5,20 @@ import javafx.scene.chart.PieChart;
 
 public class Tarefa {
     
+   
+    private int id;
     private String descricao;
     private Date prazo;
     private boolean feito;
+    private int idLista;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getDescricao() {
         return descricao;
@@ -31,6 +42,14 @@ public class Tarefa {
 
     public void setFeito(boolean feito) {
         this.feito = feito;
+    }
+
+    public int getIdLista() {
+        return idLista;
+    }
+
+    public void setIdLista(int idLista) {
+        this.idLista = idLista;
     }
     
 }
