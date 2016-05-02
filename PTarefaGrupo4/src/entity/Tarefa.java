@@ -11,7 +11,12 @@ public class Tarefa {
     private Date prazo;
     private boolean feito;
     private int idLista;
+    private String tarefa;
+    
 
+  
+
+  
     public int getId() {
         return id;
     }
