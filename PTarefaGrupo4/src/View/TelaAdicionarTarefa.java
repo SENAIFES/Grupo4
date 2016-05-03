@@ -23,6 +23,8 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         data = new Date();
+            tarefa = new Tarefa();
+            tarefa.setFeito(false);
         carregarData();
         setVisible(true);
     }
@@ -97,6 +99,11 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -158,6 +165,7 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+        
 private void carregarData() {
         grtAno.setValue((int) data.getYear() + 1900);
         grtMes.setValue((int) data.getMonth() + 1);
@@ -176,10 +184,6 @@ private void carregarData() {
     }//GEN-LAST:event_grtAnoStateChanged
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (tarefa.getId() == 0) {
-            tarefa = new Tarefa();
-            tarefa.setFeito(false);
-        }
         tarefa.setDescricao(txtTarefa.getText());
         tarefa.setPrazo(datamod);
         TarefaDAO ddao = new TarefaDAO();
@@ -190,6 +194,10 @@ private void carregarData() {
             JOptionPane.showMessageDialog(rootPane, "Erro ao Salvar");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
