@@ -11,7 +11,7 @@ public class ConnectionManager {
     public static Connection getConnection() {
 
         String servidor = "localhost";
-        String database = "dbchecklist";
+        String database = "dbtarefa";
         String conexao = "jdbc:mysql://" + servidor + "/" + database;
         String username = "root";
         String password = "";

@@ -1,13 +1,13 @@
-CREATE SCHEMA IF NOT EXISTS `dbchecklist` DEFAULT CHARACTER SET latin1 ;
-USE `dbchecklist` ;
+CREATE SCHEMA IF NOT EXISTS `dbtarefa` DEFAULT CHARACTER SET latin1 ;
+USE `dbtarefa` ;
 
--- -----------------------------------------------------
+-- -----------------------------------------------------INSERT INTO `dbtarefa`.`tarefa` (`Descrisao`, `Prazo`, `Feito`, `idLista
 -- Table `dbchecklist`.`tarefa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbchecklist`.`tarefa` (
+CREATE TABLE IF NOT EXISTS `dbtarefa`.`tarefa` (
   `idtarefa` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `data` DATE NOT NULL,
+  `Descrisao` VARCHAR(45) NOT NULL,
+  `Prazo` DATE NOT NULL,
   `feito` TINYINT(4) NOT NULL,
   PRIMARY KEY (`idtarefa`))
 ENGINE = InnoDB

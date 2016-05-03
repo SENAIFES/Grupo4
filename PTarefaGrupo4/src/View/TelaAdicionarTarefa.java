@@ -5,7 +5,10 @@
  */
 package View;
 
+import DAO.TarefaDAO;
+import entity.Tarefa;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,9 +22,8 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
     public TelaAdicionarTarefa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        data = new Date();
         carregarData();
-        txtFData.setText("11111");
-        txtTarefa.setText("huehueBR");
         setVisible(true);
     }
 
@@ -35,35 +37,59 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btnExcluir = new javax.swing.JButton();
-        btnSalvar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtTarefa = new javax.swing.JTextField();
+        grtDia = new javax.swing.JSpinner();
+        grtMes = new javax.swing.JSpinner();
+        grtAno = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        txtFData = new javax.swing.JFormattedTextField();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Cancel.png"))); // NOI18N
-        btnExcluir.setText("Cancelar");
-
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Save.png"))); // NOI18N
-        btnSalvar.setText("Salvar");
-
         jLabel3.setText("Data:");
 
         jLabel2.setText("Tarefa:");
 
+        grtDia.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        grtDia.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                grtDiaStateChanged(evt);
+            }
+        });
+
+        grtMes.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        grtMes.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                grtMesStateChanged(evt);
+            }
+        });
+
+        grtAno.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        grtAno.setToolTipText(" ");
+        grtAno.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        grtAno.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                grtAnoStateChanged(evt);
+            }
+        });
+
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/png/128x128/note_add.png"))); // NOI18N
 
-        try {
-            txtFData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Save.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Cancel.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -72,44 +98,53 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTarefa))
+                        .addComponent(txtTarefa)
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtFData))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 78, Short.MAX_VALUE)
-                                .addComponent(btnSalvar)))
-                        .addGap(19, 19, 19)
-                        .addComponent(btnExcluir)))
-                .addContainerGap())
+                        .addGap(11, 11, 11)
+                        .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelar)
+                        .addGap(35, 35, 35))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(grtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(grtMes, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(grtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 16, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addGap(22, 22, 22)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(txtFData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(grtMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(grtDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(grtAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar)
-                            .addComponent(btnExcluir))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                            .addComponent(btnCancelar))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,14 +162,107 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void carregarData() {
+        grtAno.setValue((int) data.getYear() + 1900);
+        grtMes.setValue((int) data.getMonth() + 1);
+        grtDia.setValue((int) data.getDate());
+    }
+    private void grtDiaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_grtDiaStateChanged
+        dataGrtConfig();
+    }//GEN-LAST:event_grtDiaStateChanged
+
+    private void grtMesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_grtMesStateChanged
+        dataGrtConfig();
+    }//GEN-LAST:event_grtMesStateChanged
+
+    private void grtAnoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_grtAnoStateChanged
+        dataGrtConfig();
+    }//GEN-LAST:event_grtAnoStateChanged
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Tarefa tarefa = new Tarefa();
+        tarefa.setDescricao(txtTarefa.getText());
+        tarefa.setFeito(false);
+        tarefa.setPrazo(datamod);
+        TarefaDAO ddao = new TarefaDAO();
+        if (ddao.salvar(tarefa) ) {
+            JOptionPane.showMessageDialog(rootPane, "Salvo Com Sucesso");
+            dispose();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Erro ao Salvar");
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public void carregarData(){
-     
+    Date data;
+    Date datamod;
+    
+    private void dataGrtConfig() {
         
-}
+        datamod = new Date(data.getTime());
+        datamod.setMonth((int) grtMes.getValue() - 1);
+        datamod.setYear((int) grtAno.getValue() - 1900);
+        if ((int) grtDia.getValue() > retornardiasDoMes(datamod)) {
+            grtDia.setValue(1);
+        }
+        if ((int) grtDia.getValue() <= 0) {
+            grtDia.setValue(retornardiasDoMes(datamod));
+        }
+        if ((int) grtMes.getValue() > 12) {
+            grtMes.setValue(1);
+        }
+        if ((int) grtMes.getValue() <= 0) {
+            grtMes.setValue(12);
+        }
+        if ((int) grtAno.getValue() > 2050) {
+            grtAno.setValue(data.getYear());
+        }
+        if ((int) grtAno.getValue() <= 1970) {
+            grtAno.setValue(data.getYear());
+        }
+    }
+    
+    public static int retornardiasDoMes(Date data) {
+        
+        switch (data.getMonth()) {
+            case 0:
+                return 31;
+            case 1:
+                
+                if (data.getYear() % 4 == 0) {
+                    
+                    return 29;
+                } else {
+                    return 28;
+                }
+            
+            case 2:
+                return 31;
+            case 3:
+                return 30;
+            case 4:
+                return 31;
+            case 5:
+                return 30;
+            case 6:
+                return 31;
+            case 7:
+                return 31;
+            case 8:
+                return 30;
+            case 9:
+                return 31;
+            case 10:
+                return 30;
+            case 11:
+                return 31;
+        }
+        return 0;
+        
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -178,13 +306,15 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JSpinner grtAno;
+    private javax.swing.JSpinner grtDia;
+    private javax.swing.JSpinner grtMes;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JFormattedTextField txtFData;
     private javax.swing.JTextField txtTarefa;
     // End of variables declaration//GEN-END:variables
 }

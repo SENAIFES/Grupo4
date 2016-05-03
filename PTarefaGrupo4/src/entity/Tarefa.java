@@ -10,7 +10,7 @@ public class Tarefa {
     private String descricao;
     private Date prazo;
     private boolean feito;
-    private int idLista;
+   // private int idLista;
 
     public int getId() {
         return id;
@@ -44,12 +44,12 @@ public class Tarefa {
         this.feito = feito;
     }
 
-    public int getIdLista() {
-        return idLista;
-    }
-
-    public void setIdLista(int idLista) {
-        this.idLista = idLista;
-    }
+//    public int getIdLista() {
+//        return idLista;
+//    }
+//
+//    public void setIdLista(int idLista) {
+//        this.idLista = idLista;
+//    }
     
 }

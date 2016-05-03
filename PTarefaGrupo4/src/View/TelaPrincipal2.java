@@ -198,6 +198,7 @@ public class TelaPrincipal2 extends javax.swing.JFrame {
     }//GEN-LAST:event_rbojeActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        TelaAdicionarTarefa te = new TelaAdicionarTarefa(this, rootPaneCheckingEnabled);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
