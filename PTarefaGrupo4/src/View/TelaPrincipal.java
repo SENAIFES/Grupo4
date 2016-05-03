@@ -68,7 +68,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tarefas"));
 
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/png/16x16/remove.png"))); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,10 +221,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbojeActionPerformed
 
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        TelaAdicionarTarefa te = new TelaAdicionarTarefa(this, rootPaneCheckingEnabled);
-    }//GEN-LAST:event_btnAdicionarActionPerformed
-
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -233,19 +229,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFeitoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-            int resposta = JOptionPane.showConfirmDialog(this, "!\n" + "\n" + "Voce deseja excluir a Tarefa "
-                    + tbTarefa.getSelectedColumn() + " ? ", " Excluir ", 0);
-            if (resposta == 0) {
-                TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
-                tarefa = model.getTarefa(tbTarefa.getSelectedRow());
+        int resposta = JOptionPane.showConfirmDialog(this, "!\n" + "\n" + "Voce deseja excluir a Tarefa "
+            + tbTarefa.getSelectedColumn() + " ? ", " Excluir ", 0);
+        if (resposta == 0) {
+            TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
+            tarefa = model.getTarefa(tbTarefa.getSelectedRow());
 
-                if (tarefaDAO.delete(tarefa.getId())) {
-                    JOptionPane.showMessageDialog(this, " Excluido ! ");
-                }
+            if (tarefaDAO.delete(tarefa.getId())) {
+                JOptionPane.showMessageDialog(this, " Excluido ! ");
             }
-
+        }
 
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        TelaAdicionarTarefa te = new TelaAdicionarTarefa(this, rootPaneCheckingEnabled);
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
     /**
      * @param args the command line arguments
