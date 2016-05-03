@@ -68,7 +68,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tarefas"));
 
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +75,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Modify.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,7 +82,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/png/16x16/add.png"))); // NOI18N
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +123,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         buttonGroup1.add(rbMes);
         rbMes.setText("Mês");
 
-        btnFeito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/png/16x16/accept.png"))); // NOI18N
         btnFeito.setText("Feito");
         btnFeito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
