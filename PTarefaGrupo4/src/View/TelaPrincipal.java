@@ -244,8 +244,8 @@ carregarTabela();
     }//GEN-LAST:event_btnFeitoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int resposta = JOptionPane.showConfirmDialog(this, "!\n" + "\n" + "Voce deseja excluir a Tarefa "
-                + tbTarefa.getSelectedColumn() + " ? ", " Excluir ", 0);
+        int resposta = JOptionPane.showConfirmDialog(this, "\n" + "Voce deseja excluir a Tarefa "
+                + tbTarefa.getSelectedRow()+ " ? ", " Excluir ", 0);
         if (resposta == 0) {
             TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
             tarefa = model.getTarefa(tbTarefa.getSelectedRow());
