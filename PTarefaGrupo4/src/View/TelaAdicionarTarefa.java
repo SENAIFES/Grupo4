@@ -27,6 +27,18 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
         setVisible(true);
     }
 
+    public TelaAdicionarTarefa(java.awt.Frame parent, boolean modal, Tarefa tarefa) {
+        super(parent, modal);
+        initComponents();
+        data = new Date();
+        this.tarefa = tarefa;
+        data.setTime(tarefa.getPrazo().getTime());
+        txtTarefa.setText(tarefa.getDescricao());
+        carregarData();
+        setVisible(true);
+    }
+    Tarefa tarefa;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,15 +192,17 @@ private void carregarData() {
     }//GEN-LAST:event_grtAnoStateChanged
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Tarefa tarefa = new Tarefa();
+        if (tarefa.getId() == 0) {
+            tarefa = new Tarefa();
+            tarefa.setFeito(false);
+        }
         tarefa.setDescricao(txtTarefa.getText());
-        tarefa.setFeito(false);
         tarefa.setPrazo(datamod);
         TarefaDAO ddao = new TarefaDAO();
-        if (ddao.salvar(tarefa) ) {
+        if (ddao.salvar(tarefa)) {
             JOptionPane.showMessageDialog(rootPane, "Salvo Com Sucesso");
             dispose();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Erro ao Salvar");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -198,9 +212,9 @@ private void carregarData() {
      */
     Date data;
     Date datamod;
-    
+
     private void dataGrtConfig() {
-        
+
         datamod = new Date(data.getTime());
         datamod.setMonth((int) grtMes.getValue() - 1);
         datamod.setYear((int) grtAno.getValue() - 1900);
@@ -223,21 +237,21 @@ private void carregarData() {
             grtAno.setValue(data.getYear());
         }
     }
-    
+
     public static int retornardiasDoMes(Date data) {
-        
+
         switch (data.getMonth()) {
             case 0:
                 return 31;
             case 1:
-                
+
                 if (data.getYear() % 4 == 0) {
-                    
+
                     return 29;
                 } else {
                     return 28;
                 }
-            
+
             case 2:
                 return 31;
             case 3:
@@ -260,9 +274,9 @@ private void carregarData() {
                 return 31;
         }
         return 0;
-        
+
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
