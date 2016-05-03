@@ -37,7 +37,7 @@ public class TarefaTableModel extends AbstractTableModel {
         if (columnIndex == 0) {
             return umaTarefa.getDescricao();
         } else if (columnIndex == 1) {
-            return umaTarefa.getPrazo();
+            return umaTarefa.getPrazo().getDate()+" / "+umaTarefa.getPrazo().getMonth()+" / "+(umaTarefa.getPrazo().getYear()+1900);
         } else if (columnIndex == 2) {
             return umaTarefa.isFeito();
         } else {

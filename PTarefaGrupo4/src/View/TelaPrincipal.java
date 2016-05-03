@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
+import javax.swing.text.html.parser.DTDConstants;
 
 /**
  *
@@ -23,20 +24,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private Tarefa tarefa;
     private List<Tarefa> listaTarefas = new ArrayList<Tarefa>();
 
-    TarefaDAO tarefaDAO = new TarefaDAO();
 
     public TelaPrincipal() {
         initComponents();
+        carregarTabela();
     }
 
     private void mostrarTarefas(List<Tarefa> listaTarefa) {
         TarefaDAO dao = new TarefaDAO();
         DefaultListModel modelo = new DefaultListModel();
-        for (Tarefa Tarefas : tarefaDAO.listarTodos()) {
+        for (Tarefa Tarefas : dao.listarTodos()) {
             modelo.addElement(Tarefas);
 
         }
         tbTarefa.setModel((TableModel) modelo);
+    }
+
+    private void carregarTabela() {
+        TarefaDAO tdao = new TarefaDAO();
+        TarefaTableModel tarefamodel = new TarefaTableModel();
+        listaTarefas = tdao.listarTodos();
+        tarefamodel.setLista(listaTarefas);
+        tbTarefa.setModel(tarefamodel);
     }
 
     /**
@@ -214,25 +223,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbojeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbojeActionPerformed
-        // TODO add your handling code here:
+carregarTabela();
     }//GEN-LAST:event_rbojeActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+carregarTabela();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnFeitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFeitoActionPerformed
-        // TODO add your handling code here:
+    TarefaTableModel tbmodel = (TarefaTableModel) tbTarefa.getModel();
+        Tarefa t = tbmodel.getTarefa(tbTarefa.getSelectedRow());
+        if (t.isFeito()) {
+            t.setFeito(false);
+        }else{
+            t.setFeito(true);
+        }
+            TarefaDAO tdao=new TarefaDAO();
+        tdao.salvar(t);
+        carregarTabela();
     }//GEN-LAST:event_btnFeitoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         int resposta = JOptionPane.showConfirmDialog(this, "!\n" + "\n" + "Voce deseja excluir a Tarefa "
-            + tbTarefa.getSelectedColumn() + " ? ", " Excluir ", 0);
+                + tbTarefa.getSelectedColumn() + " ? ", " Excluir ", 0);
         if (resposta == 0) {
             TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
             tarefa = model.getTarefa(tbTarefa.getSelectedRow());
+        TarefaDAO dao = new TarefaDAO();
 
-            if (tarefaDAO.delete(tarefa.getId())) {
+            if (dao.delete(tarefa.getId())) {
                 JOptionPane.showMessageDialog(this, " Excluido ! ");
+                carregarTabela();
             }
         }
 
@@ -240,6 +261,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         TelaAdicionarTarefa te = new TelaAdicionarTarefa(this, rootPaneCheckingEnabled);
+        carregarTabela();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     /**

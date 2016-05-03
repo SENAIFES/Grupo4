@@ -44,7 +44,7 @@ public class TarefaDAO {
             ps.setString(1, tarefa.getDescricao());
             ps.setDate(2, new Date(tarefa.getPrazo().getTime()));
             ps.setBoolean(3, tarefa.isFeito());
-            ps.setInt(5, tarefa.getId());
+            ps.setInt(4, tarefa.getId());
 
             ps.execute();
 

@@ -23,8 +23,8 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         data = new Date();
-            tarefa = new Tarefa();
-            tarefa.setFeito(false);
+        tarefa = new Tarefa();
+        tarefa.setFeito(false);
         carregarData();
         setVisible(true);
     }
@@ -165,8 +165,8 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-        
-private void carregarData() {
+
+    private void carregarData() {
         grtAno.setValue((int) data.getYear() + 1900);
         grtMes.setValue((int) data.getMonth() + 1);
         grtDia.setValue((int) data.getDate());
