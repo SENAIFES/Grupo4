@@ -16,6 +16,10 @@ public class TarefaTableModel extends AbstractTableModel {
     public void setLista(List<Tarefa> lista) {
         this.lista = lista;
     }
+    
+    public Tarefa getTarefa(int linha) {
+        return lista.get(linha);
+    }
 
     @Override
     public int getRowCount() {
@@ -31,7 +35,6 @@ public class TarefaTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Tarefa umaTarefa = lista.get(rowIndex);
         if (columnIndex == 0) {
-
             return umaTarefa.getDescricao();
         } else if (columnIndex == 1) {
             return umaTarefa.getPrazo();
@@ -40,7 +43,8 @@ public class TarefaTableModel extends AbstractTableModel {
         } else {
             return "";
 
+        }
     }
-}
+    
 
 }

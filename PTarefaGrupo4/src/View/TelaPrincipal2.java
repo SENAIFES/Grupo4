@@ -5,7 +5,14 @@
  */
 package View;
 
+import DAO.TarefaDAO;
+import entity.Tarefa;
+import entity.TarefaTableModel;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -13,11 +20,23 @@ import javax.swing.JOptionPane;
  */
 public class TelaPrincipal2 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaPrincipal
-     */
+    private Tarefa tarefa;
+    private List<Tarefa> listaTarefas = new ArrayList<Tarefa>();
+
+    TarefaDAO tarefaDAO = new TarefaDAO();
+
     public TelaPrincipal2() {
         initComponents();
+    }
+
+    private void mostrarTarefas(List<Tarefa> listaTarefa) {
+        TarefaDAO dao = new TarefaDAO();
+        DefaultListModel modelo = new DefaultListModel();
+        for (Tarefa Tarefas : tarefaDAO.listarTodos()) {
+            modelo.addElement(Tarefas);
+
+        }
+        tbTarefa.setModel((TableModel) modelo);
     }
 
     /**
@@ -51,6 +70,11 @@ public class TelaPrincipal2 extends javax.swing.JFrame {
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/png/16x16/remove.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Modify.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -207,6 +231,21 @@ public class TelaPrincipal2 extends javax.swing.JFrame {
     private void btnFeitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFeitoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnFeitoActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+            int resposta = JOptionPane.showConfirmDialog(this, "!\n" + "\n" + "Voce deseja excluir a Tarefa "
+                    + tbTarefa.getSelectedColumn() + " ? ", " Excluir ", 0);
+            if (resposta == 0) {
+                TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
+                tarefa = model.getTarefa(tbTarefa.getSelectedRow());
+
+                if (tarefaDAO.delete(tarefa.getId())) {
+                    JOptionPane.showMessageDialog(this, " Excluido ! ");
+                }
+            }
+
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
