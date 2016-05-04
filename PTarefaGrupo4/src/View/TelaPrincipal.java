@@ -24,7 +24,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private Tarefa tarefa;
     private List<Tarefa> listaTarefas = new ArrayList<Tarefa>();
 
-
     public TelaPrincipal() {
         initComponents();
         carregarTabela();
@@ -223,33 +222,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbojeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbojeActionPerformed
-carregarTabela();
+        carregarTabela();
     }//GEN-LAST:event_rbojeActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-carregarTabela();
+              TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
+            tarefa = model.getTarefa(tbTarefa.getSelectedRow());
+        TelaAdicionarTarefa tela = new TelaAdicionarTarefa(this, rootPaneCheckingEnabled, tarefa);
+
+        carregarTabela();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnFeitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFeitoActionPerformed
-    TarefaTableModel tbmodel = (TarefaTableModel) tbTarefa.getModel();
+        TarefaTableModel tbmodel = (TarefaTableModel) tbTarefa.getModel();
         Tarefa t = tbmodel.getTarefa(tbTarefa.getSelectedRow());
         if (t.isFeito()) {
             t.setFeito(false);
-        }else{
+        } else {
             t.setFeito(true);
         }
-            TarefaDAO tdao=new TarefaDAO();
+        TarefaDAO tdao = new TarefaDAO();
         tdao.salvar(t);
         carregarTabela();
     }//GEN-LAST:event_btnFeitoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         int resposta = JOptionPane.showConfirmDialog(this, "\n" + "Voce deseja excluir a Tarefa "
-                + tbTarefa.getSelectedRow()+ " ? ", " Excluir ", 0);
+                + tbTarefa.getSelectedRow() + " ? ", " Excluir ", 0);
         if (resposta == 0) {
             TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
             tarefa = model.getTarefa(tbTarefa.getSelectedRow());
-        TarefaDAO dao = new TarefaDAO();
+            TarefaDAO dao = new TarefaDAO();
 
             if (dao.delete(tarefa.getId())) {
                 JOptionPane.showMessageDialog(this, " Excluido ! ");

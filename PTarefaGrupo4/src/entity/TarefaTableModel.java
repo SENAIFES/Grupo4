@@ -6,6 +6,10 @@ import javax.swing.table.AbstractTableModel;
 
 public class TarefaTableModel extends AbstractTableModel {
 
+    public TarefaTableModel() {
+
+    }
+
     private List<Tarefa> lista;
 
     //Getters and Setters
@@ -16,7 +20,7 @@ public class TarefaTableModel extends AbstractTableModel {
     public void setLista(List<Tarefa> lista) {
         this.lista = lista;
     }
-    
+
     public Tarefa getTarefa(int linha) {
         return lista.get(linha);
     }
@@ -37,7 +41,7 @@ public class TarefaTableModel extends AbstractTableModel {
         if (columnIndex == 0) {
             return umaTarefa.getDescricao();
         } else if (columnIndex == 1) {
-            return umaTarefa.getPrazo().getDate()+" / "+umaTarefa.getPrazo().getMonth()+" / "+(umaTarefa.getPrazo().getYear()+1900);
+            return umaTarefa.getPrazo().getDate() + " / " + umaTarefa.getPrazo().getMonth() + " / " + (umaTarefa.getPrazo().getYear() + 1900);
         } else if (columnIndex == 2) {
             return umaTarefa.isFeito();
         } else {
@@ -45,6 +49,21 @@ public class TarefaTableModel extends AbstractTableModel {
 
         }
     }
-    
+
+    @Override
+    public String getColumnName(int column) {
+        switch (column) {
+            case 0:
+                return "Descrição";
+            case 1:
+                return "Prazo";
+            case 2:
+                return "Feito";
+            default:
+                return "SemAtributo";
+
+        }
+
+    }
 
 }
