@@ -77,6 +77,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tarefas"));
 
         btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -84,6 +85,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -109,6 +111,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 "Descrição", "Prazo", "Feito"
             }
         ));
+        tbTarefa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbTarefaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbTarefa);
 
         ckbMostrarConcluidos.setText("Mostrar Concluidos");
@@ -132,6 +139,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         rbMes.setText("Mês");
 
         btnFeito.setText("Feito");
+        btnFeito.setEnabled(false);
         btnFeito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFeitoActionPerformed(evt);
@@ -226,46 +234,78 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_rbojeActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-              TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
-            tarefa = model.getTarefa(tbTarefa.getSelectedRow());
-        TelaAdicionarTarefa tela = new TelaAdicionarTarefa(this, rootPaneCheckingEnabled, tarefa);
+        if (tbTarefa.getSelectedRow() >= 0) {
 
-        carregarTabela();
+            TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
+            tarefa = model.getTarefa(tbTarefa.getSelectedRow());
+            TelaAdicionarTarefa tela = new TelaAdicionarTarefa(this, rootPaneCheckingEnabled, tarefa);
+
+            carregarTabela();
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            btnFeito.setEnabled(false);
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (tbTarefa.getSelectedRow() >= 0) {
+
             TarefaTableModel model = (TarefaTableModel) tbTarefa.getModel();
             tarefa = model.getTarefa(tbTarefa.getSelectedRow());
-        int resposta = JOptionPane.showConfirmDialog(this, "\n" + "Voce deseja excluir a Tarefa "
-                + tarefa.getDescricao() + " ? ", " Excluir ", 0);
-        if (resposta == 0) {
-            TarefaDAO dao = new TarefaDAO();
+            int resposta = JOptionPane.showConfirmDialog(this, "\n" + "Voce deseja excluir a Tarefa "
+                    + tarefa.getDescricao() + " ? ", " Excluir ", 0);
+            if (resposta == 0) {
+                TarefaDAO dao = new TarefaDAO();
 
-            if (dao.delete(tarefa.getId())) {
-                JOptionPane.showMessageDialog(this, " Excluido ! ");
-                carregarTabela();
+                if (dao.delete(tarefa.getId())) {
+                    JOptionPane.showMessageDialog(this, " Excluido ! ");
+                    carregarTabela();
+                }
             }
         }
-
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnFeito.setEnabled(false);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         TelaAdicionarTarefa te = new TelaAdicionarTarefa(this, rootPaneCheckingEnabled);
         carregarTabela();
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnFeito.setEnabled(false);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnFeitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFeitoActionPerformed
-        TarefaTableModel tbmodel = (TarefaTableModel) tbTarefa.getModel();
-        Tarefa t = tbmodel.getTarefa(tbTarefa.getSelectedRow());
-        if (t.isFeito()) {
-            t.setFeito(false);
-        } else {
-            t.setFeito(true);
+        if (tbTarefa.getSelectedRow() >= 0) {
+
+            TarefaTableModel tbmodel = (TarefaTableModel) tbTarefa.getModel();
+            Tarefa t = tbmodel.getTarefa(tbTarefa.getSelectedRow());
+            if (t.isFeito()) {
+                t.setFeito(false);
+            } else {
+                t.setFeito(true);
+            }
+            TarefaDAO tdao = new TarefaDAO();
+            tdao.salvar(t);
+            carregarTabela();
         }
-        TarefaDAO tdao = new TarefaDAO();
-        tdao.salvar(t);
-        carregarTabela();
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnFeito.setEnabled(false);
     }//GEN-LAST:event_btnFeitoActionPerformed
+
+    private void tbTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTarefaMouseClicked
+        if (tbTarefa.getSelectedRow() >= 0) {
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+            btnFeito.setEnabled(true);
+        } else {
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            btnFeito.setEnabled(false);
+        }
+    }//GEN-LAST:event_tbTarefaMouseClicked
 
     /**
      * @param args the command line arguments
