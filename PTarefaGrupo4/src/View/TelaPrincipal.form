@@ -75,8 +75,8 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnExcluir" linkSize="1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnFeito" linkSize="1" min="-2" pref="94" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btnFeito" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -208,7 +208,7 @@
             <Property name="text" type="java.lang.String" value="M&#xea;s"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="btnFeito">
+        <Component class="javax.swing.JButton" name="btnFeito">
           <Properties>
             <Property name="text" type="java.lang.String" value="Feito"/>
           </Properties>
