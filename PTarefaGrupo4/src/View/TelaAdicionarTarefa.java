@@ -26,6 +26,7 @@ public class TelaAdicionarTarefa extends javax.swing.JDialog {
         tarefa = new Tarefa();
         tarefa.setFeito(false);
         carregarData();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
