@@ -101,6 +101,30 @@ public class TarefaDAO {
         }
         return lista;
     }
+    public List< Tarefa> listarTodosPorID() {
+        List< Tarefa> lista = new ArrayList< Tarefa>();
+        Connection conn = ConnectionManager.getConnection();
+        try {
+            PreparedStatement ps
+                    = conn.prepareStatement("SELECT idtarefa,descrisao,prazo,feito FROM dbtarefa.tarefa;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Tarefa tarefa = new Tarefa();
+                tarefa.setId(rs.getInt("idtarefa"));
+                tarefa.setDescricao(rs.getString("descrisao"));
+                tarefa.setPrazo(new java.util.Date(rs.getDate("prazo").getTime()));
+                tarefa.setFeito(rs.getBoolean("feito"));
+                lista.add(tarefa);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
 //////
 
     public Tarefa BuscarPorId(int id) {
