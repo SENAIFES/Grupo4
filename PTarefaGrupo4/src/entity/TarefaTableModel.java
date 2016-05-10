@@ -43,7 +43,12 @@ public class TarefaTableModel extends AbstractTableModel {
         } else if (columnIndex == 1) {
             return umaTarefa.getPrazo().getDate() + " / " + umaTarefa.getPrazo().getMonth() + " / " + (umaTarefa.getPrazo().getYear() + 1900);
         } else if (columnIndex == 2) {
-            return umaTarefa.isFeito();
+            if (umaTarefa.isFeito()) {
+                return "Sim";
+
+            } else {
+                return "Não";
+            }
         } else {
             return "";
 

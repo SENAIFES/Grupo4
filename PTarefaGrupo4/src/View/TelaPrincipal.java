@@ -27,6 +27,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         carregarTabela();
+        setLocationRelativeTo(null);
     }
 
     private void mostrarTarefas(List<Tarefa> listaTarefa) {
