@@ -13,3 +13,7 @@ CREATE TABLE IF NOT EXISTS `dbtarefa`.`tarefa` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = latin1;
+CREATE TABLE `dbtarefa`.`lista` (
+  `idLista` INT NOT NULL AUTO_INCREMENT,
+  `Descricao` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`idLista`))
